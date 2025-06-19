@@ -1,21 +1,16 @@
-FROM openjdk:8-jre-alpine
-MAINTAINER Jerrico Gamis <jecklgamis@gmail.com>
+# Use official OpenJDK base image
+FROM openjdk:17-jdk-slim
 
-RUN apk update && apk add bash curl
+# Set working directory
+WORKDIR /app
 
-ENV APP_HOME /app
-RUN mkdir -m 0755 -p ${APP_HOME}/bin
+# Copy your Gatling JAR file into the image
+COPY gatling-java-example.jar /app/gatling-java-example.jar
 
-COPY target/gatling-java-example.jar ${APP_HOME}/bin/
-COPY docker-entrypoint.sh /
-RUN chmod +x /docker-entrypoint.sh
+# Default simulation class to run (customize this)
+ENV SIMULATION=computerdatabase.BasicSimulation
 
-RUN addgroup -S gatling && adduser -S gatling -G gatling
-RUN chown -R gatling:gatling ${APP_HOME}
-RUN chown gatling:gatling /docker-entrypoint.sh
+# Command to run the Gatling simulation
+CMD ["java", "-cp", "gatling-java-example.jar", "io.gatling.app.Gatling", "-s", "computerdatabase.BasicSimulation"]
 
-USER gatling
-WORKDIR ${APP_HOME}
-
-CMD ["/docker-entrypoint.sh"]
 
