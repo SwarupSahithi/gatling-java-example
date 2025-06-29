@@ -1,12 +1,11 @@
-# Use a base image with OpenJDK
+# Use a lightweight OpenJDK image
 FROM openjdk:17-jdk-slim
 
-# Set environment variables
-ENV APP_HOME=/opt/gatling
-WORKDIR $APP_HOME
+# Set working directory inside the container
+WORKDIR /opt/gatling
 
-# Copy the JAR file to the image
-COPY target/gatling-java-example-1.0-SNAPSHOT.jar app.jar
+# Copy the correct JAR
+COPY target/gatling-java-example.jar app.jar
 
-# Default command to run Gatling simulations
+# Run the JAR
 ENTRYPOINT ["java", "-jar", "app.jar"]
