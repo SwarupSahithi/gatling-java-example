@@ -1,15 +1,12 @@
-# Use a lightweight Java base image
-FROM eclipse-temurin:17-jdk-alpine
+# Use a base image with OpenJDK
+FROM openjdk:17-jdk-slim
 
-# Set the working directory inside the container
-WORKDIR /app
+# Set environment variables
+ENV APP_HOME=/opt/gatling
+WORKDIR $APP_HOME
 
-# Copy the Gatling JAR into the image
+# Copy the JAR file to the image
 COPY target/gatling-java-example.jar app.jar
 
-
-# Expose any relevant ports (if needed, usually Gatling is headless)
-EXPOSE 8080
-
-# Run the simulation
-CMD ["java", "-jar", "gatling-java-example.jar"]
+# Default command to run Gatling simulations
+ENTRYPOINT ["java", "-jar", "app.jar"]
