@@ -5,7 +5,8 @@ FROM openjdk:17-jdk-slim
 WORKDIR /opt/gatling
 
 # Copy the correct JAR
-COPY target/gatling-java-example.jar app.jar
+COPY target/*.jar app.jar
+
 
 # Run the JAR
 ENTRYPOINT ["java", "-jar", "app.jar"]
