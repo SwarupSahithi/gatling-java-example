@@ -5,7 +5,8 @@ FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 
 # Copy the Gatling JAR into the image
-COPY gatling-java-example.jar /app/
+COPY target/gatling-java-example.jar app.jar
+
 
 # Expose any relevant ports (if needed, usually Gatling is headless)
 EXPOSE 8080
