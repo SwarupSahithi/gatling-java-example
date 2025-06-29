@@ -1,12 +1,11 @@
-# Use a lightweight OpenJDK image
+# Use lightweight OpenJDK
 FROM openjdk:17-jdk-slim
 
-# Set working directory inside the container
+# Set working directory
 WORKDIR /opt/gatling
 
-# Copy the correct JAR
-COPY target/*.jar app.jar
+# Copy the full-fat JAR file
+COPY target/gatling-java-example.jar app.jar
 
-
-# Run the JAR
+# Run the Gatling JAR
 ENTRYPOINT ["java", "-jar", "app.jar"]
