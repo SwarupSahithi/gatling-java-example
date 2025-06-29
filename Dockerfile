@@ -6,7 +6,7 @@ ENV APP_HOME=/opt/gatling
 WORKDIR $APP_HOME
 
 # Copy the JAR file to the image
-COPY target/gatling-java-example.jar app.jar
+COPY target/gatling-java-example-1.0-SNAPSHOT.jar app.jar
 
 # Default command to run Gatling simulations
 ENTRYPOINT ["java", "-jar", "app.jar"]
