@@ -18,4 +18,4 @@ WORKDIR /app
 COPY --from=builder /app /app
 
 # Run Gatling simulation
-CMD ["mvn", "gatling:test"]
+CMD ["gatling:test"]
