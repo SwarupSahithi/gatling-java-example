@@ -17,5 +17,3 @@ WORKDIR /app
 # Copy the built project (including reports folder)
 COPY --from=builder /app /app
 
-# Run Gatling simulation
-CMD ["gatling:test"]
