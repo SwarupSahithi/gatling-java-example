@@ -1,11 +1,21 @@
-# Use lightweight OpenJDK
-FROM openjdk:17-jdk-slim
+# ----------- Stage 1: Build with Maven -----------
+FROM maven:3.9.6-eclipse-temurin-8 AS builder
 
-# Set working directory
-WORKDIR /opt/gatling
+WORKDIR /app
 
-# Copy the full-fat JAR file
-COPY target/gatling-java-example.jar app.jar
+# Copy the project files
+COPY . .
 
-# Run the Gatling JAR
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Build the project and download dependencies
+RUN mvn clean package -DskipTests
+
+# ----------- Stage 2: Run Gatling Simulation -----------
+FROM openjdk:8-jdk-slim
+
+WORKDIR /app
+
+# Copy the built project (including reports folder)
+COPY --from=builder /app /app
+
+# Run Gatling simulation
+CMD ["mvn", "gatling:test"]
